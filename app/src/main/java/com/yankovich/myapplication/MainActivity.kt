@@ -4,13 +4,16 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -26,7 +29,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    RecipeItem("Android")
+                    RecipeList()
                 }
             }
         }
@@ -34,13 +37,33 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
+fun RecipeList(){
+    LazyColumn {
+        items(10){
+            RecipeItem(name = "test")
+        }
+    }
+}
+
+
+@Composable
 fun RecipeItem(name: String) {
-    val image = painterResource(id = R.drawable.androidparty)
+    val image = painterResource(id = R.drawable.recipe)
     Column {
-        Image(painter = image, contentDescription = null)
+        Image(
+            painter = image,
+            contentDescription = null,
+//            modifier = Modifier.aspectRatio(16f/9f),
+            contentScale = ContentScale.Fit,
+        )
         Text(text = "Product name '$name!'", fontSize = 22.sp, color = Color.White)
         Text(text = "lorem ipsum set dolar um no met", color = Color.White)
     }
+}
+
+@Composable
+fun Empty() {
+    Text(text = "Just empty text", color = Color.White)
 }
 
 @Preview(
@@ -52,6 +75,8 @@ fun RecipeItem(name: String) {
 @Composable
 fun DefaultPreview() {
     MyApplicationTheme {
-        RecipeItem("empty")
+//        RecipeItem("empty")
+//        Empty()
+        RecipeList()
     }
 }
